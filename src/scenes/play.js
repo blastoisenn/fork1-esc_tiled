@@ -86,9 +86,9 @@ export class Play extends Phaser.Scene {
     bombs = this.physics.add.group();
 
     //  The score
-    scoreText = this.add.text(30, 6, "score: 0", {
+    scoreText = this.add.text(30, 6, "Score: 0", {
       fontSize: "32px",
-      fill: "#000",
+      fill: "#fff",
     });
 
     // Collide the player and the stars with the platforms
