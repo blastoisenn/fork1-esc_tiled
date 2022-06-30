@@ -6,39 +6,37 @@ var cursors;
 var score;
 var gameOver;
 var scoreText;
-var win=0;
 
 // Clase Play, donde se crean todos los sprites, el escenario del juego y se inicializa y actualiza toda la logica del juego.
-export class Play extends Phaser.Scene {
+export class Play3 extends Phaser.Scene {
   constructor() {
     // Se asigna una key para despues poder llamar a la escena
-    super("Play");
+    super("Play3");
   }
 
   preload() {
-    this.load.tilemapTiledJSON("map", "public/assets/tilemaps/map.json");
-    this.load.image("tilesBelow", "public/assets/images/sky_atlas.png");
-    this.load.image("tilesPlatform", "public/assets/images/platform_atlas.png");
+    this.load.tilemapTiledJSON("map3", "public/assets/tilemaps/map3.json");
+    this.load.image("tilesBelow3", "public/assets/images/sky_atlas.png");
+    this.load.image("tilesPlatform3", "public/assets/images/platform_atlas3.png");
   }
 
   create() {
-    console.log("escena1")
-    const map = this.make.tilemap({ key: "map" });
+    const map3 = this.make.tilemap({ key: "map3" });
 
     // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
     // Phaser's cache (i.e. the name you used in preload)
-    const tilesetBelow = map.addTilesetImage("sky_atlas", "tilesBelow");
-    const tilesetPlatform = map.addTilesetImage(
+    const tilesetBelow = map3.addTilesetImage("sky_atlas", "tilesBelow3");
+    const tilesetPlatform = map3.addTilesetImage(
       "platform_atlas",
-      "tilesPlatform"
+      "tilesPlatform3"
     );
 
     // Parameters: layer name (or index) from Tiled, tileset, x, y
-    const belowLayer = map.createLayer("Fondo", tilesetBelow, 0, 0);
-    const worldLayer = map.createLayer("Plataformas", tilesetPlatform, 0, 0);
-    const objectsLayer = map.getObjectLayer("Objetos");
+    const belowLayer3 = map3.createLayer("Fondo", tilesetBelow, 0, 0);
+    const worldLayer3 = map3.createLayer("Plataformas", tilesetPlatform, 0, 0);
+    const objectsLayer3 = map3.getObjectLayer("Objetos");
 
-    worldLayer.setCollisionByProperty({ collides: true });
+    worldLayer3.setCollisionByProperty({ collides: true });
 
     // tiles marked as colliding
     /*
@@ -51,7 +49,7 @@ export class Play extends Phaser.Scene {
     */
 
     // Find in the Object Layer, the name "dude" and get position
-    const spawnPoint = map.findObject("Objetos", (obj) => obj.name === "dude");
+    const spawnPoint = map3.findObject("Objetos", (obj) => obj.name === "dude");
     // The player and its settings
     player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "dude");
 
@@ -69,7 +67,7 @@ export class Play extends Phaser.Scene {
 
     // find object layer
     // if type is "stars", add to stars group
-    objectsLayer.objects.forEach((objData) => {
+    objectsLayer3.objects.forEach((objData) => {
       //console.log(objData.name, objData.type, objData.x, objData.y);
 
       const { x = 0, y = 0, name, type } = objData;
@@ -95,9 +93,9 @@ export class Play extends Phaser.Scene {
 
     // Collide the player and the stars with the platforms
     // REPLACE Add collision with worldLayer
-    this.physics.add.collider(player, worldLayer);
-    this.physics.add.collider(stars, worldLayer);
-    this.physics.add.collider(bombs, worldLayer);
+    this.physics.add.collider(player, worldLayer3);
+    this.physics.add.collider(stars, worldLayer3);
+    this.physics.add.collider(bombs, worldLayer3);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     this.physics.add.overlap(player, stars, this.collectStar, null, this);
@@ -109,9 +107,6 @@ export class Play extends Phaser.Scene {
   }
 
   update() {
-
-
-
     if (gameOver) {
       return;
     }
@@ -158,16 +153,6 @@ export class Play extends Phaser.Scene {
       bomb.setBounce(1);
       bomb.setCollideWorldBounds(true);
       bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-
-      win++;
-
-      if (win==2){
-        win=0;
-        this.scene.start(
-         "Play2",
-         { score: score });
-   
-       }
     }
   }
 
