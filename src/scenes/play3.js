@@ -1,11 +1,11 @@
 // Declaracion de variables para esta escena
-var player;
-var stars;
-var bombs;
-var cursors;
-var score;
-var gameOver;
-var scoreText;
+let player;
+let stars;
+let bombs;
+let cursors;
+let score;
+let gameOver;
+let scoreText;
 
 // Clase Play, donde se crean todos los sprites, el escenario del juego y se inicializa y actualiza toda la logica del juego.
 export class Play3 extends Phaser.Scene {
@@ -144,12 +144,12 @@ export class Play3 extends Phaser.Scene {
         child.enableBody(true, child.x, child.y, true, true);
       });
 
-      var x =
+      let x =
         player.x < 400
           ? Phaser.Math.Between(400, 800)
           : Phaser.Math.Between(0, 400);
 
-      var bomb = bombs.create(x, 16, "bomb");
+      let bomb = bombs.create(x, 16, "bomb");
       bomb.setBounce(1);
       bomb.setCollideWorldBounds(true);
       bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
